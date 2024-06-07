@@ -21,6 +21,10 @@ const BookAssignmentView = () => {
 
   const { loading, error, data } = useQuery(GET_BOOKS);
 
+  console.log('Loading:', loading);
+  console.log('Error:', error);
+  console.log('Data:', data);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 

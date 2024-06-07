@@ -1,41 +1,42 @@
 import React from 'react';
 import { ListItem, ListItemText, Button, Avatar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles({
-  listItem: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  avatar: {
-    marginRight: '10px',
-  },
-  button: {
-    marginLeft: '10px',
-  },
+const ListItemContainer = styled(ListItem)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
+
+const AvatarStyled = styled(Avatar)({
+  marginRight: '10px',
+});
+
+const ButtonStyled = styled(Button)({
+  marginLeft: '10px',
 });
 
 const BookItem = ({ book, onAdd, onRemove, inReadingList }) => {
-  const classes = useStyles();
-
   return (
-    <ListItem className={classes.listItem}>
+    <ListItemContainer>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar src={`/assets/${book.coverPhotoURL}`} className={classes.avatar} />
+        <AvatarStyled src={book.coverPhotoURL} />
         <ListItemText primary={book.title} secondary={book.author} />
       </div>
       {inReadingList ? (
-        <Button onClick={() => onRemove(book)} variant="contained" color="secondary" className={classes.button}>
+        <ButtonStyled onClick={() => onRemove(book)} variant="contained" color="secondary">
           Remove
-        </Button>
+        </ButtonStyled>
       ) : (
-        <Button onClick={() => onAdd(book)} variant="contained" color="primary" className={classes.button}>
+        <ButtonStyled onClick={() => onAdd(book)} variant="contained" color="primary">
           Add
-        </Button>
+        </ButtonStyled>
       )}
-    </ListItem>
+    </ListItemContainer>
   );
 };
 
 export default BookItem;
+
+
+

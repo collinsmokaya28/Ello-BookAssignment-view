@@ -7,7 +7,7 @@ const BookList = ({ books, onAdd, onRemove, readingList }) => {
     <List>
       {books.map((book) => (
         <BookItem
-          key={book.title}
+          key={`${book.title}-${book.author}`} // Ensure unique key
           book={book}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -19,3 +19,5 @@ const BookList = ({ books, onAdd, onRemove, readingList }) => {
 };
 
 export default BookList;
+
+
