@@ -1,70 +1,177 @@
-# Getting Started with Create React App
+# Ello Web Viewer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ello Web Viewer is a React application that allows teachers to assign books to students. The app provides a user interface for searching books, adding them to a reading list, and managing the reading list. This project includes both a frontend built with React and a backend server built with Node.js and GraphQL.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Search bar to search for books by title.
+- List of search results displaying the book title, author, and a button to add the book to the reading list.
+- Reading list displaying all the books the teacher has added.
+- Button to remove a book from the reading list.
 
-### `npm start`
+## Project Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+ello-web-viewer/
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+├── src/
 
-### `npm test`
+│ ├── frontend/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+│ │ ├── public/
 
-### `npm run build`
+│ │ ├── src/
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+│ │ │ ├── components/
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+│ │ │ │ ├── BookAssignmentView.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+│ │ │ │ ├── BookItem.js
 
-### `npm run eject`
+│ │ │ │ ├── BookList.js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+│ │ │ │ ├── ReadingList.js
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+│ │ │ │ ├── SearchBar.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+│ │ ├── package.json
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+│ ├── backend/
 
-## Learn More
+│ ├── server.js
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+│ ├── booksData.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+├── .gitignore
 
-### Code Splitting
+├── package.json
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+├── vercel.json
 
-### Analyzing the Bundle Size
+├── README.md
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Node.js
+- npm or yarn
+- Git
 
-### Advanced Configuration
+## Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Clone the Repository
 
-### Deployment
+```bash
+git clone https://github.com/collinsmokaya28/Ello-BookAssignment-view
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+cd Ello-BookAssignment-view
+```
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Set Up the Backend
+1. Navigate to the backend directory
+```bash
+cd src/backend
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3.Start the backend server
+```bash
+npm start
+```
+
+The backend server will start at `http://localhost:4000/graphql`.
+
+### Set Up the Frontend
+1. Open a new terminal and anvigate to the frontend directory.
+```bash
+cd src/frontend
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3.Start the frontend server
+```bash
+npm start
+```
+
+The front server will start at `http://localhost:3000`.
+
+
+
+
+## Deployment
+
+### Deploy to vercel
+
+1. Sign in to vercel and link your GitHub repository
+2. Create a `vercel.json` file at the root of your project with the following content
+
+```bash
+   {
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    },
+    {
+      "src": "src/backend/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "src/frontend/build/index.html"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "src/backend/server.js"
+    }
+  ]
+}
+```
+
+
+3.Push the changes to your GitHub repository
+
+```bash
+git add vercel.json
+git commit -m "Add Vercel configuration"
+git push origin main
+```
+
+4. Deploy the project using Vercel CLI or the vercel dashboard
+```bash
+   vercel --prod
+```
+
+
+
+
+
+## Usage
+
+1. Navigate to `http://localhost:3000` to use the application
+2. Use the search bar to find books by title
+3. Add books to the reading list by clicking the "Add" button
+4. Remove books from the reading list by clicking the "Remove" button
+
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+
+## License
+
+This project is licensed under the MIT lICENSE. See the Lisence file for details.
+
+
