@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import SearchBar from './SearchBar';
-import BookList from './BookList';
 import ReadingList from './ReadingList';
+import BookItem from './BookItem';
+import { styled } from '@mui/material/styles';
 
 const GET_BOOKS = gql`
   query Books {
@@ -15,6 +16,24 @@ const GET_BOOKS = gql`
   }
 `;
 
+const Container = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '100vh',
+  padding: '20px',
+});
+
+const BookGrid = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '20px',
+  marginTop: '20px',
+  width: '100%',
+  maxWidth: '1200px',
+});
+
 const BookAssignmentView = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [readingList, setReadingList] = useState([]);
@@ -22,7 +41,7 @@ const BookAssignmentView = () => {
   const { loading, error, data } = useQuery(GET_BOOKS);
 
   console.log('Loading:', loading);
-  console.log('Error:', error);
+  console.log('Error:', error ? error.message : 'No Error');
   console.log('Data:', data);
 
   if (loading) return <p>Loading...</p>;
@@ -45,12 +64,26 @@ const BookAssignmentView = () => {
   };
 
   return (
-    <div>
+    <Container>
       <SearchBar onSearch={handleSearch} />
-      <BookList books={filteredBooks} onAdd={handleAddBook} onRemove={handleRemoveBook} readingList={readingList} />
+      <BookGrid>
+        {filteredBooks.map((book) => (
+          <BookItem
+            key={`${book.title}-${book.author}`} // Ensure unique key
+            book={book}
+            onAdd={handleAddBook}
+            onRemove={handleRemoveBook}
+            inReadingList={readingList.some((b) => b.title === book.title)}
+          />
+        ))}
+      </BookGrid>
       <ReadingList books={readingList} onRemove={handleRemoveBook} />
-    </div>
+    </Container>
   );
 };
 
 export default BookAssignmentView;
+
+
+
+

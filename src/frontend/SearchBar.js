@@ -3,6 +3,8 @@ import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const SearchContainer = styled('div')({
+  width: '100%',
+  maxWidth: '600px',
   marginBottom: '20px',
 });
 
